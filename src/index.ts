@@ -1,6 +1,6 @@
 /** @talocode/screenlane — public SDK exports */
 
-export const VERSION = "0.1.3";
+export const VERSION = "0.1.4";
 
 export type {
   ScreenContext,
@@ -24,7 +24,14 @@ export type {
 export { ScreenLaneClient } from "./sdk/client.js";
 export type { ScreenLaneClientOptions } from "./sdk/client.js";
 
-export { createScreenContext, capture, listScreenshotTools, listClipboardTools } from "./core/capture.js";
+export {
+  createScreenContext,
+  capture,
+  listScreenshotTools,
+  listClipboardTools,
+  ocrAvailable,
+  runOcr,
+} from "./core/capture.js";
 export { createVoiceInput, dictate } from "./core/transcribe.js";
 export {
   createAgentCommand,

@@ -17,6 +17,8 @@ python/.pytest_cache/
 .screenlane-tmp/
 .idea/
 .vscode/
-*.mp4
 !screenlane-demo.mp4
 demo/frames/
+demo/frames_pro/
+demo-video/node_modules/
+demo-video/dist/

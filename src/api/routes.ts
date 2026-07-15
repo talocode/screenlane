@@ -14,7 +14,7 @@ import {
 import { ScreenLaneError, redactSecrets } from "../core/errors.js";
 import { checkAuthFromNodeRequest } from "../core/auth.js";
 
-const VERSION = "0.1.3";
+const VERSION = "0.1.4";
 
 export async function readJsonBody(req: IncomingMessage): Promise<unknown> {
   const chunks: Buffer[] = [];

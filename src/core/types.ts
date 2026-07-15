@@ -69,6 +69,8 @@ export interface CaptureInput {
   save?: boolean;
   title?: string;
   appName?: string;
+  /** Run local OCR on screenshot when tesseract is available (default true for screen/window) */
+  ocr?: boolean;
 }
 
 export interface DictateInput {

@@ -150,7 +150,8 @@ screenlane-py --help
 ## Notes
 
 - Prefer `--text` for dictate (no bundled live mic in v0.1).
-- Screenshots need OS tools when available; text/file/url always work.
+- Screenshots use OS tools when available; **OCR** via `tesseract` when installed (`--no-ocr` to skip).
+- Text / file / url / clipboard always work.
 - Demo is **text-mode voice simulation** (deterministic).
 - More docs: [docs/](docs/) · Demo: `screenlane demo`
 

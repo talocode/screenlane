@@ -19,29 +19,60 @@ export async function sendToCodra(prompt: string, command?: AgentCommand): Promi
     );
   }
 
-  const url = `${base}/v1/codra/run`;
-  const res = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${key}`,
-      "X-Talocode-Api-Key": key,
-    },
-    body: JSON.stringify({
-      prompt,
-      source: "screenlane",
-      commandId: command?.id,
-      intent: command?.intent,
-    }),
-    signal: AbortSignal.timeout(30000),
-  });
-  const body = await res.text();
-  if (!res.ok) {
-    throw new ProviderError(`Codra send failed (${res.status}): ${body.slice(0, 200)}`);
+  const endpoints = [
+    `${base}/v1/codra/repo-summary`,
+    `${base}/v1/codra/run`,
+    `${base}/v1/router/chat/completions`,
+  ];
+
+  let lastErr = "";
+  for (const url of endpoints) {
+    try {
+      const isChat = url.includes("chat/completions");
+      const payload = isChat
+        ? {
+            model: "default",
+            messages: [
+              {
+                role: "system",
+                content: "You are Codra acting on a ScreenLane debug/coding command.",
+              },
+              { role: "user", content: prompt },
+            ],
+          }
+        : {
+            prompt,
+            text: prompt,
+            source: "screenlane",
+            commandId: command?.id,
+            intent: command?.intent,
+          };
+
+      const res = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${key}`,
+          "X-Talocode-Api-Key": key,
+        },
+        body: JSON.stringify(payload),
+        signal: AbortSignal.timeout(30000),
+      });
+      const text = await res.text();
+      if (res.ok) {
+        try {
+          return { endpoint: url, data: JSON.parse(text) };
+        } catch {
+          return { endpoint: url, raw: text };
+        }
+      }
+      lastErr = `${url} -> ${res.status}: ${text.slice(0, 200)}`;
+      if (res.status === 401 || res.status === 403) break;
+    } catch (err) {
+      lastErr = `${url} -> ${err instanceof Error ? err.message : String(err)}`;
+    }
   }
-  try {
-    return JSON.parse(body);
-  } catch {
-    return { raw: body };
-  }
+  throw new ProviderError(
+    `Codra cloud send failed against ${base}. Last error: ${lastErr}. Use --target clipboard offline.`
+  );
 }

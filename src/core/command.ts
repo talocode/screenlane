@@ -7,6 +7,7 @@ import type {
   VoiceInput,
 } from "./types.js";
 import { capture, createScreenContext } from "./capture.js";
+// capture used for image context files (OCR)
 import { detectLikelyIntent, extractLikelyPaths, summarizeContext } from "./context.js";
 import { ScreenLaneError } from "./errors.js";
 import { loadConfig, parseTarget } from "./config.js";
@@ -163,13 +164,23 @@ export async function createCommand(input: CreateCommandInput): Promise<AgentCom
     if (!existsSync(input.contextFile)) {
       throw new ScreenLaneError(`Context file not found: ${input.contextFile}`, "CONTEXT_FILE", 400);
     }
-    const text = readFileSync(input.contextFile, "utf8");
-    context = createScreenContext({
-      source: "file",
-      text,
-      title: input.contextFile,
-      metadata: { file: input.contextFile },
-    });
+    // Images: capture with OCR; text files: read directly
+    if (/\.(png|jpe?g|webp|bmp|tiff?)$/i.test(input.contextFile)) {
+      context = await capture({
+        source: "file",
+        file: input.contextFile,
+        save: false,
+        ocr: true,
+      });
+    } else {
+      const text = readFileSync(input.contextFile, "utf8");
+      context = createScreenContext({
+        source: "file",
+        text,
+        title: input.contextFile,
+        metadata: { file: input.contextFile },
+      });
+    }
   } else if (input.contextText) {
     context = createScreenContext({
       source: "text",

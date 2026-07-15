@@ -9,6 +9,7 @@ import {
   TALOCODE_CLOUD_API_BASE,
 } from "./config.js";
 import { listClipboardTools, listScreenshotTools } from "./capture.js";
+import { ocrAvailable } from "./ocr.js";
 import { maskKey } from "./errors.js";
 import type { DoctorCheck, DoctorReport } from "./types.js";
 import { nowIso } from "./ids.js";
@@ -60,6 +61,14 @@ export async function doctor(): Promise<DoctorReport> {
     name: "clipboard_tools",
     status: clipOk ? "ok" : "warn",
     detail: clip.map((t) => `${t.name}:${t.available ? "yes" : "no"}`).join(", "),
+  });
+
+  checks.push({
+    name: "ocr",
+    status: ocrAvailable() ? "ok" : "info",
+    detail: ocrAvailable()
+      ? "tesseract available (screen OCR enabled)"
+      : "tesseract not found — install tesseract-ocr for screenshot text extraction",
   });
 
   const talo = resolveTalocodeApiKey();

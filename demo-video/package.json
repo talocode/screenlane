@@ -1,0 +1,22 @@
+{
+  "name": "@talocode/screenlane-demo-video",
+  "private": true,
+  "version": "0.1.3",
+  "type": "module",
+  "scripts": {
+    "render": "NODE_OPTIONS='-r ./scripts/fix-network.cjs' PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium remotion render src/root.tsx ScreenLaneDemo dist/screenlane-demo.mp4 --concurrency=1"
+  },
+  "dependencies": {
+    "@remotion/cli": "^4.0.329",
+    "@remotion/renderer": "^4.0.329",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "remotion": "^4.0.329"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.0"
+  }
+}

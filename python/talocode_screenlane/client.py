@@ -6,6 +6,9 @@ import urllib.error
 import urllib.request
 from typing import Any, Optional
 
+CLOUD_API_BASE = "https://api.talocode.site"
+LOCAL_API_BASE = "http://127.0.0.1:3070"
+
 
 class ScreenLaneError(Exception):
     def __init__(self, message: str, status: Optional[int] = None):
@@ -14,22 +17,21 @@ class ScreenLaneError(Exception):
 
 
 class ScreenLaneClient:
-    """HTTP client for a local ScreenLane server + local helpers."""
+    """HTTP client for ScreenLane (local server or Talocode Cloud)."""
 
     def __init__(
         self,
         base_url: Optional[str] = None,
         api_key: Optional[str] = None,
         timeout: float = 30.0,
+        cloud: bool = False,
     ) -> None:
-        # Local ScreenLane server by default; cloud is https://api.talocode.site
-        self.base_url = (
-            base_url
-            or os.environ.get("SCREENLANE_API_BASE_URL")
-            or os.environ.get("TALOCODE_API_BASE_URL")
-            or os.environ.get("TALOCODE_BASE_URL")
-            or "http://127.0.0.1:3070"
-        ).rstrip("/")
+        if base_url:
+            self.base_url = base_url.rstrip("/")
+        elif cloud:
+            self.base_url = CLOUD_API_BASE
+        else:
+            self.base_url = LOCAL_API_BASE
         self.api_key = api_key or os.environ.get("TALOCODE_API_KEY")
         self.timeout = timeout
 
@@ -51,7 +53,8 @@ class ScreenLaneClient:
         except urllib.error.URLError as e:
             raise ScreenLaneError(
                 f"Cannot reach ScreenLane at {self.base_url}: {e.reason}. "
-                "Start the server with `screenlane serve`."
+                "Start the server with `screenlane serve`, or use cloud=True for "
+                f"{CLOUD_API_BASE}."
             ) from e
 
     def health(self) -> Any:

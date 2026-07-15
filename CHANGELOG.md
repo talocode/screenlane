@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.4] — 2026-07-15
+
+### Added
+
+- Local OCR via `tesseract` for screen/image captures
+- Cloud route probes aligned with Talocode CLOUD.md (`/v1/router/chat/completions`, etc.)
+- Remotion professional demo video project (`demo-video/`)
+
 ## [0.1.3] — 2026-07-15
 
 ### Changed

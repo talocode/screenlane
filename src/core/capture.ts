@@ -7,6 +7,7 @@ import { CaptureError } from "./errors.js";
 import { getCapturesDir, getPlatform, ensureDirs } from "./config.js";
 import { newId, nowIso } from "./ids.js";
 import { saveContext } from "./storage.js";
+import { ocrAvailable, runOcr } from "./ocr.js";
 
 function which(cmd: string): string | null {
   try {
@@ -188,9 +189,26 @@ export async function capture(input: CaptureInput = {}): Promise<ScreenContext> 
   } else if (source === "file") {
     if (!input.file) throw new CaptureError("Provide --file for file capture");
     if (!existsSync(input.file)) throw new CaptureError(`File not found: ${input.file}`);
-    text = readFileSync(input.file, "utf8").slice(0, 100_000);
     title = title || input.file;
     metadata.file = input.file;
+    const isImage = /\.(png|jpe?g|webp|bmp|tiff?)$/i.test(input.file);
+    if (isImage) {
+      imagePath = input.file;
+      if (input.ocr !== false) {
+        const ocr = runOcr(input.file);
+        metadata.ocr = { engine: ocr.engine, note: ocr.note };
+        if (ocr.text) {
+          text = ocr.text;
+          metadata.ocrUsed = true;
+        } else {
+          text = text || `[Image ${input.file}]. ${ocr.note}`;
+        }
+      } else {
+        text = text || `[Image file ${input.file}]`;
+      }
+    } else {
+      text = readFileSync(input.file, "utf8").slice(0, 100_000);
+    }
   } else if (source === "url") {
     if (!url) throw new CaptureError("Provide --url for url capture");
     text = await fetchUrlText(url);
@@ -217,9 +235,23 @@ export async function capture(input: CaptureInput = {}): Promise<ScreenContext> 
       metadata.fallback = true;
     } else if (imagePath) {
       title = title || "Screen capture";
-      text =
-        text ||
-        `[Screen capture saved to ${imagePath}]. OCR is not included in v0.1; pair with --text for agent-ready text context.`;
+      const wantOcr = input.ocr !== false;
+      if (wantOcr && !text) {
+        const ocr = runOcr(imagePath);
+        metadata.ocr = { engine: ocr.engine, note: ocr.note };
+        if (ocr.text) {
+          text = ocr.text;
+          metadata.ocrUsed = true;
+        } else {
+          text =
+            `[Screen capture saved to ${imagePath}]. ${ocr.note}` +
+            (ocr.engine === "none"
+              ? " Pair with --text/--file for agent-ready context."
+              : "");
+        }
+      } else if (!text) {
+        text = `[Screen capture saved to ${imagePath}]. Pass --ocr (default) with tesseract, or --text for context.`;
+      }
     }
   }
 
@@ -251,6 +283,8 @@ export function writeManualCaptureFile(text: string, outPath?: string): string {
 export function toolAvailable(cmd: string): boolean {
   return Boolean(which(cmd));
 }
+
+export { ocrAvailable, runOcr };
 
 // silence unused import if execSync unused
 void execSync;

@@ -6,7 +6,7 @@
 import { MCP_TOOLS, callTool } from "./tools.js";
 
 const PROTOCOL_VERSION = "2024-11-05";
-const SERVER_INFO = { name: "screenlane", version: "0.1.3" };
+const SERVER_INFO = { name: "screenlane", version: "0.1.4" };
 
 interface JsonRpcRequest {
   jsonrpc?: string;

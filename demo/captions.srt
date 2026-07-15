@@ -1,23 +1,20 @@
 1
-00:00:00,000 --> 00:00:08,000
-Talk to your screen. — ScreenLane v0.1
+00:00:00,000 --> 00:00:03,000
+Talk to your screen.
 
 2
-00:00:08,000 --> 00:00:16,000
-Visible context: terminal TypeError at Dashboard.tsx:42
+00:00:03,000 --> 00:00:10,000
+Terminal error. Instruction: “Fix this error”
+(text-mode voice simulation)
 
 3
-00:00:16,000 --> 00:00:24,000
-User: “Fix this error” (text-mode voice simulation)
+00:00:10,000 --> 00:00:28,000
+screenlane demo → intent: debug_error → target: codra
 
 4
-00:00:24,000 --> 00:00:32,000
-ScreenLane builds intent debug_error → target codra
+00:00:28,000 --> 00:00:40,000
+TALOCODE_API_KEY · https://api.talocode.site
 
 5
-00:00:32,000 --> 00:00:40,000
-Route to Codra, Tera, Codex, OpenCode, MCP, or clipboard
-
-6
 00:00:40,000 --> 00:00:48,000
-ScreenLane — screen-aware voice command layer for AI agents
+npm i -g @talocode/screenlane — Talk to your screen.

@@ -91,6 +91,8 @@ program
   .option("--url <url>", "url to fetch as context")
   .option("--out <format>", "json|text", "json")
   .option("--save", "persist to ~/.screenlane/contexts", false)
+  .option("--ocr", "OCR screenshots when tesseract is available (default on)", true)
+  .option("--no-ocr", "Skip OCR on screenshots")
   .action(async (opts) => {
     try {
       const ctx = await capture({
@@ -99,6 +101,7 @@ program
         text: opts.text,
         url: opts.url,
         save: Boolean(opts.save),
+        ocr: opts.ocr !== false,
       });
       print(ctx, opts.out);
     } catch (err) {

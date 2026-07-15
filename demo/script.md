@@ -1,13 +1,15 @@
-# Narration script (~45s)
+# Narration / caption script (~48s)
 
 Talk to your screen.
 
-ScreenLane is an open-source, screen-aware voice command layer for AI agents.
+The terminal is screaming. You say: fix this error.
+(text-mode voice simulation for a deterministic demo.)
 
-Here is a terminal error. The user says: fix this error — using text-mode voice simulation for a deterministic demo.
+ScreenLane captures context, builds intent debug_error, and routes a Codra-ready prompt.
 
-ScreenLane captures the context, builds an agent-ready command with intent debug_error, and routes it to Codra, Tera, Codex, OpenCode, MCP, or the clipboard.
+One key. One cloud base.
+TALOCODE_API_KEY · api.talocode.site
+Local core works without a key.
 
-Local-first. Cloud optional.
-
-ScreenLane — screen-aware voice command layer for AI agents.
+npm i -g @talocode/screenlane
+Talk to your screen.

@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.1.1] — 2026-07-15
+
+### Fixed
+
+- npm `bin` entry points at `dist/cli.js` so `npx @talocode/screenlane` exposes the CLI
+
 ## [0.1.0] — 2026-07-15
 
 ### Added

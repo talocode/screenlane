@@ -11,4 +11,4 @@ screenlane command \
 screenlane send --target clipboard --text "$(screenlane command --text "Explain this page" --context-text "..." --out prompt)"
 ```
 
-Live `screenlane send --target tera` requires `TALOCODE_API_KEY` (cloud base: `https://api.talocode.site`).
+Live `screenlane send --target tera` needs `TALOCODE_API_KEY` → `https://api.talocode.site`.

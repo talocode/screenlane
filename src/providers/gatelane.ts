@@ -3,7 +3,7 @@ import { ProviderError } from "../core/errors.js";
 import { resolveCloudApiBase, resolveTalocodeApiKey } from "../core/config.js";
 
 export function gatelaneBaseUrl(): string {
-  return resolveCloudApiBase(process.env.GATELANE_API_BASE_URL);
+  return resolveCloudApiBase();
 }
 
 export function gatelaneApiKey(): string | undefined {

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.3] — 2026-07-15
+
+### Changed
+
+- Docs and package page: only `TALOCODE_API_KEY` + `https://api.talocode.site`
+- Cloud base fixed to `https://api.talocode.site`
+
 ## [0.1.2] — 2026-07-15
 
 ### Changed

@@ -3,7 +3,7 @@ import { ProviderError } from "../core/errors.js";
 import { resolveCloudApiBase, resolveTalocodeApiKey } from "../core/config.js";
 
 export function teraBaseUrl(): string {
-  return resolveCloudApiBase(process.env.TERA_API_BASE_URL);
+  return resolveCloudApiBase();
 }
 
 export function teraApiKey(): string | undefined {

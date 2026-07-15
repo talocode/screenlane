@@ -12,9 +12,7 @@ import { listClipboardTools, listScreenshotTools } from "./capture.js";
 import { maskKey } from "./errors.js";
 import type { DoctorCheck, DoctorReport } from "./types.js";
 import { nowIso } from "./ids.js";
-import { teraBaseUrl, teraApiKey } from "../providers/tera.js";
-import { codraBaseUrl, codraApiKey } from "../providers/codra.js";
-import { gatelaneBaseUrl, gatelaneApiKey } from "../providers/gatelane.js";
+
 
 export async function doctor(): Promise<DoctorReport> {
   const checks: DoctorCheck[] = [];
@@ -84,31 +82,15 @@ export async function doctor(): Promise<DoctorReport> {
   checks.push({
     name: "cloud_api",
     status: "info",
-    detail: `base=${resolveCloudApiBase()} (default ${TALOCODE_CLOUD_API_BASE})`,
+    detail: TALOCODE_CLOUD_API_BASE,
   });
 
   checks.push({
-    name: "tera",
-    status: teraApiKey() ? "ok" : "info",
-    detail: teraApiKey()
-      ? `ready base=${teraBaseUrl()}`
-      : `base=${teraBaseUrl()} — set TALOCODE_API_KEY to enable`,
-  });
-
-  checks.push({
-    name: "codra",
-    status: codraApiKey() ? "ok" : "info",
-    detail: codraApiKey()
-      ? `ready base=${codraBaseUrl()}`
-      : `base=${codraBaseUrl()} — set TALOCODE_API_KEY to enable`,
-  });
-
-  checks.push({
-    name: "gatelane",
-    status: gatelaneApiKey() ? "ok" : "info",
-    detail: gatelaneApiKey()
-      ? `ready base=${gatelaneBaseUrl()}`
-      : `base=${gatelaneBaseUrl()} — set TALOCODE_API_KEY to enable`,
+    name: "cloud_targets",
+    status: talo ? "ok" : "info",
+    detail: talo
+      ? `ready (${TALOCODE_CLOUD_API_BASE})`
+      : `set TALOCODE_API_KEY to enable cloud send`,
   });
 
   checks.push({
@@ -117,27 +99,20 @@ export async function doctor(): Promise<DoctorReport> {
     detail: JSON.stringify(getEnvSummary()),
   });
 
-  // Optional connectivity pings — only when bases configured
-  for (const [name, base] of [
-    ["tera_health", teraBaseUrl()],
-    ["codra_health", codraBaseUrl()],
-    ["gatelane_health", gatelaneBaseUrl()],
-  ] as const) {
-    if (!base) continue;
-    try {
-      const res = await fetch(`${base}/health`, { signal: AbortSignal.timeout(4000) });
-      checks.push({
-        name,
-        status: res.ok ? "ok" : "warn",
-        detail: `${base}/health -> ${res.status}`,
-      });
-    } catch (err) {
-      checks.push({
-        name,
-        status: "warn",
-        detail: `${base}/health unreachable: ${err instanceof Error ? err.message : String(err)}`,
-      });
-    }
+  try {
+    const base = resolveCloudApiBase();
+    const res = await fetch(`${base}/health`, { signal: AbortSignal.timeout(4000) });
+    checks.push({
+      name: "cloud_health",
+      status: res.ok ? "ok" : "warn",
+      detail: `${base}/health -> ${res.status}`,
+    });
+  } catch (err) {
+    checks.push({
+      name: "cloud_health",
+      status: "info",
+      detail: `${TALOCODE_CLOUD_API_BASE}/health unreachable (offline ok for local use)`,
+    });
   }
 
   const ok = !checks.some((c) => c.status === "fail");

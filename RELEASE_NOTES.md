@@ -46,7 +46,7 @@ export TALOCODE_API_KEY=your_key
 # Authorization: Bearer <TALOCODE_API_KEY>
 ```
 
-Access control uses `TALOCODE_API_KEY`.
+Access: `TALOCODE_API_KEY` · Cloud: `https://api.talocode.site`
 
 ## Limitations (honest)
 

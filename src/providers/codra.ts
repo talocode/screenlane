@@ -3,7 +3,7 @@ import { ProviderError } from "../core/errors.js";
 import { resolveCloudApiBase, resolveTalocodeApiKey } from "../core/config.js";
 
 export function codraBaseUrl(): string {
-  return resolveCloudApiBase(process.env.CODRA_API_BASE_URL);
+  return resolveCloudApiBase();
 }
 
 export function codraApiKey(): string | undefined {

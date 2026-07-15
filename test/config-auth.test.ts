@@ -65,24 +65,8 @@ describe("config and auth", () => {
     assert.ok(!s.includes("sk-abcdefghijklmnop"));
   });
 
-  it("defaults cloud API base to api.talocode.site", () => {
-    const prev = {
-      SCREENLANE_API_BASE_URL: process.env.SCREENLANE_API_BASE_URL,
-      TALOCODE_API_BASE_URL: process.env.TALOCODE_API_BASE_URL,
-      TALOCODE_BASE_URL: process.env.TALOCODE_BASE_URL,
-      TERA_API_BASE_URL: process.env.TERA_API_BASE_URL,
-    };
-    delete process.env.SCREENLANE_API_BASE_URL;
-    delete process.env.TALOCODE_API_BASE_URL;
-    delete process.env.TALOCODE_BASE_URL;
-    delete process.env.TERA_API_BASE_URL;
+  it("cloud API base is api.talocode.site", () => {
     assert.equal(TALOCODE_CLOUD_API_BASE, "https://api.talocode.site");
     assert.equal(resolveCloudApiBase(), "https://api.talocode.site");
-    process.env.SCREENLANE_API_BASE_URL = "https://custom.example";
-    assert.equal(resolveCloudApiBase(), "https://custom.example");
-    for (const [k, v] of Object.entries(prev)) {
-      if (v === undefined) delete process.env[k];
-      else process.env[k] = v;
-    }
   });
 });

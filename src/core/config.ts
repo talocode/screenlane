@@ -7,21 +7,12 @@ import { nowIso } from "./ids.js";
 
 const CONFIG_VERSION = 1;
 
-/** Default Talocode Cloud API (override with SCREENLANE_API_BASE_URL / TALOCODE_API_BASE_URL / TALOCODE_BASE_URL). */
+/** Talocode Cloud API base URL. */
 export const TALOCODE_CLOUD_API_BASE = "https://api.talocode.site";
 
-/**
- * Resolve cloud API base URL.
- * Product-specific env vars win, then shared overrides, then api.talocode.site.
- */
-export function resolveCloudApiBase(productEnv?: string | undefined): string {
-  const base =
-    (productEnv && productEnv.trim()) ||
-    process.env.SCREENLANE_API_BASE_URL ||
-    process.env.TALOCODE_API_BASE_URL ||
-    process.env.TALOCODE_BASE_URL ||
-    TALOCODE_CLOUD_API_BASE;
-  return base.replace(/\/$/, "");
+/** Cloud API base — always https://api.talocode.site */
+export function resolveCloudApiBase(_ignored?: string | undefined): string {
+  return TALOCODE_CLOUD_API_BASE;
 }
 
 export function getHomeDir(): string {
@@ -160,29 +151,15 @@ export function clearTalocodeApiKey(): void {
 }
 
 export function getEnvSummary(): Record<string, string> {
-  const keys = [
-    "TALOCODE_API_KEY",
-    "SCREENLANE_REQUIRE_AUTH",
-    "SCREENLANE_API_BASE_URL",
-    "TALOCODE_API_BASE_URL",
-    "TALOCODE_BASE_URL",
-    "TERA_API_BASE_URL",
-    "CODRA_API_BASE_URL",
-    "GATELANE_API_BASE_URL",
-  ];
-  const out: Record<string, string> = {};
-  for (const k of keys) {
-    const v = process.env[k];
-    if (k.endsWith("_KEY")) {
-      out[k] = v ? "set" : "not set";
-    } else {
-      out[k] = v || "not set";
-    }
-  }
-  if (loadStoredTalocodeKey() && !process.env.TALOCODE_API_KEY) {
-    out.TALOCODE_API_KEY = "set (auth store)";
-  }
-  out.cloud_api_base = resolveCloudApiBase();
+  const out: Record<string, string> = {
+    TALOCODE_API_KEY: resolveTalocodeApiKey()
+      ? process.env.TALOCODE_API_KEY
+        ? "set"
+        : "set (auth store)"
+      : "not set",
+    SCREENLANE_REQUIRE_AUTH: process.env.SCREENLANE_REQUIRE_AUTH || "false",
+    cloud_api_base: TALOCODE_CLOUD_API_BASE,
+  };
   return out;
 }
 

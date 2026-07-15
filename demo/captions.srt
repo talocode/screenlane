@@ -1,0 +1,23 @@
+1
+00:00:00,000 --> 00:00:08,000
+Talk to your screen. — ScreenLane v0.1
+
+2
+00:00:08,000 --> 00:00:16,000
+Visible context: terminal TypeError at Dashboard.tsx:42
+
+3
+00:00:16,000 --> 00:00:24,000
+User: “Fix this error” (text-mode voice simulation)
+
+4
+00:00:24,000 --> 00:00:32,000
+ScreenLane builds intent debug_error → target codra
+
+5
+00:00:32,000 --> 00:00:40,000
+Route to Codra, Tera, Codex, OpenCode, MCP, or clipboard
+
+6
+00:00:40,000 --> 00:00:48,000
+ScreenLane — screen-aware voice command layer for AI agents

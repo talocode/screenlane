@@ -1,0 +1,44 @@
+{
+  "context": {
+    "id": "ctx_09dd4118-3c22-431e-b84e-ee02b5af2257",
+    "timestamp": "2026-07-15T17:12:15.266Z",
+    "platform": "linux",
+    "source": "text",
+    "title": "Terminal — npm run dev (error)",
+    "appName": "terminal",
+    "text": "TypeError: Cannot read properties of undefined (reading 'map')\n    at renderList (src/components/Dashboard.tsx:42:18)\n    at Dashboard (src/components/Dashboard.tsx:88:5)\n    at renderWithHooks (node_modules/react-dom/cjs/react-dom.development.js:15486:18)\n\n  40 | function renderList(items) {\n  41 |   // items may be undefined when API fails\n> 42 |   return items.map((item) => <Row key={item.id} item={item} />);\n     |                  ^\n  43 | }\n\nError: API /api/items returned 500\n    at fetchItems (src/lib/api.ts:15:11)",
+    "metadata": {
+      "demo": true,
+      "note": "text-mode voice simulation for deterministic demo"
+    }
+  },
+  "voice": {
+    "id": "voice_881ac888-cee1-4c83-9a45-c841292bbc80",
+    "timestamp": "2026-07-15T17:12:15.270Z",
+    "source": "text",
+    "transcript": "Fix this error",
+    "language": "en"
+  },
+  "command": {
+    "id": "cmd_2a6ce8dc-b81a-4fc9-940b-96958556a33a",
+    "timestamp": "2026-07-15T17:12:15.275Z",
+    "intent": "debug_error",
+    "instruction": "Fix this error",
+    "contextSummary": "source=text | title=Terminal — npm run dev (error) | app=terminal\n\nTypeError: Cannot read properties of undefined (reading 'map')\n    at renderList (src/components/Dashboard.tsx:42:18)\n    at Dashboard (src/components/Dashboard.tsx:88:5)\n    at renderWithHooks (node_modules/react-dom/cjs/react-dom.development.js:15486:18)\n\n  40 | function renderList(items) {\n  41 |   // items may be undefined when API fails\n> 42 |   return items.map((item) => <Row key={item.id} item={item} />);\n     |           ",
+    "target": "codra",
+    "confidence": 0.85,
+    "prompt": "You are Codra, a coding agent. Diagnose issues, propose minimal patches, and implement carefully.\n\nIntent: debug_error\n\nScreen context:\n```\nsource=text | title=Terminal — npm run dev (error) | app=terminal\n\nTypeError: Cannot read properties of undefined (reading 'map')\n    at renderList (src/components/Dashboard.tsx:42:18)\n    at Dashboard (src/components/Dashboard.tsx:88:5)\n    at renderWithHooks (node_modules/react-dom/cjs/react-dom.development.js:15486:18)\n\n  40 | function renderList(items) {\n  41 |   // items may be undefined when API fails\n> 42 |   return items.map((item) => <Row key={item.id} item={item} />);\n     |                  ^\n  43 | }\n\nError: API /api/items returned 500\n    at fetchItems (src/lib/api.ts:15:11)\n```\n\nLikely files/paths from context:\n- src/components/Dashboard.tsx\n- node_modules/react-dom/cjs/react-dom.development.js\n- src/lib/api.ts\n\nUser instruction:\nFix this error\n\nRequirements:\n- Diagnose the root cause of the visible error. Propose a minimal fix. List assumptions. Do not rewrite unrelated code.\n- Preserve the user's intent.\n- Avoid dumping huge unrelated context back to the user.\n- Call out safety risks if the action could modify production systems or delete data.\n- If information is missing, ask one minimal clarifying question only when necessary.",
+    "suggestedActions": [
+      "Identify error type and stack frames",
+      "Locate failing file/function",
+      "Propose minimal patch"
+    ],
+    "safetyNotes": [
+      "Local-first: review the prompt before sending to external agents.",
+      "External API targets require valid keys and live endpoints."
+    ],
+    "rawContextId": "ctx_09dd4118-3c22-431e-b84e-ee02b5af2257",
+    "rawVoiceInputId": "voice_881ac888-cee1-4c83-9a45-c841292bbc80"
+  },
+  "note": "text-mode voice simulation for deterministic demo. No live microphone or screenshot was used."
+}

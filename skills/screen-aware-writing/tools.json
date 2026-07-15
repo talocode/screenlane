@@ -1,0 +1,11 @@
+{
+  "skill": "screen-aware-writing",
+  "version": "0.1.0",
+  "tools": [
+    "screenlane_capture",
+    "screenlane_dictate",
+    "screenlane_command",
+    "screenlane_send"
+  ],
+  "preferredTargets": ["clipboard", "tera", "stdout"]
+}

@@ -1,0 +1,76 @@
+{
+  "name": "@talocode/screenlane",
+  "version": "0.1.0",
+  "description": "Open-source screen-aware voice command layer for AI agents — capture screen context, transcribe voice, generate agent-ready commands, and send actions to Tera, Codra, Codex, OpenCode, or MCP tools.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "bin": {
+    "screenlane": "./bin/screenlane.js"
+  },
+  "files": [
+    "dist",
+    "bin",
+    "skills",
+    "docs",
+    "examples",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "test": "node --import tsx --test test/**/*.test.ts",
+    "dev": "tsc --watch",
+    "start": "node dist/cli.js",
+    "mcp": "node dist/mcp/server.js",
+    "demo": "node dist/cli.js demo",
+    "doctor": "node dist/cli.js doctor",
+    "pack:check": "npm pack --dry-run",
+    "prepublishOnly": "npm run build && npm test",
+    "smoke": "node scripts/smoke-test.mjs"
+  },
+  "dependencies": {
+    "commander": "^12.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "screen-aware",
+    "voice",
+    "dictation",
+    "mcp",
+    "ai-agents",
+    "developer-tools",
+    "codex",
+    "opencode",
+    "tera",
+    "codra",
+    "talocode",
+    "cli",
+    "sdk"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/talocode/screenlane.git"
+  },
+  "homepage": "https://github.com/talocode/screenlane",
+  "bugs": {
+    "url": "https://github.com/talocode/screenlane/issues"
+  },
+  "author": "Talocode"
+}

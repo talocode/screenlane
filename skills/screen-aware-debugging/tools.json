@@ -1,0 +1,11 @@
+{
+  "skill": "screen-aware-debugging",
+  "version": "0.1.0",
+  "tools": [
+    "screenlane_capture",
+    "screenlane_command",
+    "screenlane_send",
+    "screenlane_demo"
+  ],
+  "preferredTargets": ["codra", "codex", "opencode"]
+}

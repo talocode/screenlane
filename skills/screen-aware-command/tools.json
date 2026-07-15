@@ -1,0 +1,13 @@
+{
+  "skill": "screen-aware-command",
+  "version": "0.1.0",
+  "tools": [
+    "screenlane_capture",
+    "screenlane_dictate",
+    "screenlane_command",
+    "screenlane_send",
+    "screenlane_doctor",
+    "screenlane_list_contexts",
+    "screenlane_list_commands"
+  ]
+}

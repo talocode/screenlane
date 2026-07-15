@@ -57,7 +57,8 @@ export class ConfigError extends ScreenLaneError {
 export function redactSecrets(text: string): string {
   if (!text) return text;
   return text
-    .replace(/(TALOCODE_API_KEY|TERA_API_KEY|CODRA_API_KEY|GATELANE_API_KEY|OPENAI_API_KEY|SCREENLANE_API_KEY)\s*[=:]\s*["']?[^\s"']+/gi, "$1=***")
+    .replace(/(TALOCODE_API_KEY)\s*[=:]\s*["']?[^\s"']+/gi, "$1=***")
+    .replace(/([A-Z][A-Z0-9_]*API_KEY)\s*[=:]\s*["']?[^\s"']+/gi, "$1=***")
     .replace(/(Bearer\s+)[A-Za-z0-9._\-+/=]+/gi, "$1***")
     .replace(/(sk-[A-Za-z0-9]{8})[A-Za-z0-9]+/g, "$1***")
     .replace(/(talo_[A-Za-z0-9]{4})[A-Za-z0-9]+/g, "$1***");

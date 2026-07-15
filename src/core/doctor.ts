@@ -4,7 +4,6 @@ import { listClipboardTools, listScreenshotTools } from "./capture.js";
 import { maskKey } from "./errors.js";
 import type { DoctorCheck, DoctorReport } from "./types.js";
 import { nowIso } from "./ids.js";
-import { openaiConfigured } from "../providers/openai.js";
 import { teraBaseUrl, teraApiKey } from "../providers/tera.js";
 import { codraBaseUrl, codraApiKey } from "../providers/codra.js";
 import { gatelaneBaseUrl, gatelaneApiKey } from "../providers/gatelane.js";
@@ -62,7 +61,7 @@ export async function doctor(): Promise<DoctorReport> {
     name: "TALOCODE_API_KEY",
     status: talo ? "ok" : "info",
     detail: talo
-      ? `present ${maskKey(talo)} (used for auth when SCREENLANE_REQUIRE_AUTH=true and cloud targets)`
+      ? `present ${maskKey(talo)}`
       : "not set — local core works without it",
   });
 
@@ -71,13 +70,7 @@ export async function doctor(): Promise<DoctorReport> {
     status: "info",
     detail: config.requireAuth || process.env.SCREENLANE_REQUIRE_AUTH === "true"
       ? "required (Bearer TALOCODE_API_KEY)"
-      : "local open (set SCREENLANE_REQUIRE_AUTH=true to gate with TALOCODE_API_KEY)",
-  });
-
-  checks.push({
-    name: "OPENAI_API_KEY",
-    status: openaiConfigured() ? "ok" : "info",
-    detail: openaiConfigured() ? "set (audio transcription available)" : "not set",
+      : "local open (set SCREENLANE_REQUIRE_AUTH=true + TALOCODE_API_KEY to gate)",
   });
 
   checks.push({
@@ -85,8 +78,8 @@ export async function doctor(): Promise<DoctorReport> {
     status: teraBaseUrl() && teraApiKey() ? "ok" : "info",
     detail:
       teraBaseUrl() && teraApiKey()
-        ? `configured base=${teraBaseUrl()} (auth: TALOCODE_API_KEY only)`
-        : "not fully configured (needs TERA_API_BASE_URL + TALOCODE_API_KEY)",
+        ? `configured base=${teraBaseUrl()}`
+        : "not fully configured (TERA_API_BASE_URL + TALOCODE_API_KEY)",
   });
 
   checks.push({
@@ -94,8 +87,8 @@ export async function doctor(): Promise<DoctorReport> {
     status: codraBaseUrl() && codraApiKey() ? "ok" : "info",
     detail:
       codraBaseUrl() && codraApiKey()
-        ? `configured base=${codraBaseUrl()} (auth: TALOCODE_API_KEY only)`
-        : "not fully configured (needs CODRA_API_BASE_URL + TALOCODE_API_KEY)",
+        ? `configured base=${codraBaseUrl()}`
+        : "not fully configured (CODRA_API_BASE_URL + TALOCODE_API_KEY)",
   });
 
   checks.push({
@@ -103,8 +96,8 @@ export async function doctor(): Promise<DoctorReport> {
     status: gatelaneBaseUrl() && gatelaneApiKey() ? "ok" : "info",
     detail:
       gatelaneBaseUrl() && gatelaneApiKey()
-        ? `configured base=${gatelaneBaseUrl()} (auth: TALOCODE_API_KEY only)`
-        : "not fully configured (needs GATELANE_API_BASE_URL + TALOCODE_API_KEY)",
+        ? `configured base=${gatelaneBaseUrl()}`
+        : "not fully configured (GATELANE_API_BASE_URL + TALOCODE_API_KEY)",
   });
 
   checks.push({

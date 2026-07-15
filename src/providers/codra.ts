@@ -7,7 +7,6 @@ export function codraBaseUrl(): string | undefined {
   return base ? base.replace(/\/$/, "") : undefined;
 }
 
-/** Cloud calls use only TALOCODE_API_KEY (no product-specific keys). */
 export function codraApiKey(): string | undefined {
   return resolveTalocodeApiKey();
 }

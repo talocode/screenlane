@@ -4,8 +4,7 @@
 
 ### Changed
 
-- Access and Talocode cloud integrations use **only `TALOCODE_API_KEY`**
-- Removed acceptance of `SCREENLANE_API_KEY`, `TERA_API_KEY`, `CODRA_API_KEY`, `GATELANE_API_KEY` as credentials
+- Access and cloud integrations use `TALOCODE_API_KEY`
 
 ## [0.1.1] — 2026-07-15
 
@@ -25,6 +24,6 @@
 - Talocode skills: screen-aware-command, screen-aware-debugging, screen-aware-writing
 - Python package `talocode-screenlane` / `screenlane-py`
 - Local JSON storage under `~/.screenlane`
-- Auth gated solely by `TALOCODE_API_KEY` when `SCREENLANE_REQUIRE_AUTH=true`
+- Auth gated by `TALOCODE_API_KEY` when `SCREENLANE_REQUIRE_AUTH=true`
 - Deterministic demo and offline command templates
 - Docs, examples, smoke tests, demo video assets

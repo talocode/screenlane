@@ -43,7 +43,7 @@ screenlane dictate [--text "..."] [--audio path]
                    [--out json|text] [--save]
 ```
 
-v0.1: **always** prefer `--text` for demos/CI. Audio requires `OPENAI_API_KEY` or Tera base+key.
+v0.1: **always** prefer `--text` for demos/CI.
 
 ## command
 
@@ -91,7 +91,7 @@ Uses **text-mode voice simulation** (no live mic).
 
 ## auth
 
-Manages **TALOCODE_API_KEY** only:
+Manages `TALOCODE_API_KEY`:
 
 ```bash
 screenlane auth set --key <key>   # does not print full key

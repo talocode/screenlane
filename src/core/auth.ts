@@ -3,15 +3,12 @@ import { AuthError } from "./errors.js";
 import { loadConfig, resolveTalocodeApiKey } from "./config.js";
 
 /**
- * Access gating uses ONLY TALOCODE_API_KEY.
+ * Access gating uses TALOCODE_API_KEY.
  * When SCREENLANE_REQUIRE_AUTH=true (or config.requireAuth),
  * clients must send:
  *   Authorization: Bearer <TALOCODE_API_KEY>
  * or
  *   X-Talocode-Api-Key: <TALOCODE_API_KEY>
- *
- * Not accepted for access (ignored / will not unlock the API):
- * SCREENLANE_API_KEY, TERA_API_KEY, CODRA_API_KEY, GATELANE_API_KEY, OPENAI_API_KEY.
  */
 export function isAuthRequired(): boolean {
   if (process.env.SCREENLANE_REQUIRE_AUTH === "true") return true;

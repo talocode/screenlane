@@ -15,14 +15,11 @@ v0.1 has no bundled mic STT. Use:
 
 ```bash
 screenlane dictate --text "your words"
-# or
-export OPENAI_API_KEY=...
-screenlane dictate --audio ./clip.wav --provider openai
 ```
 
-## Tera/Codra send errors
+## Cloud send errors
 
-Need live `*_API_BASE_URL` and **`TALOCODE_API_KEY` only** (product keys are not used). Offline:
+Need the service base URL and `TALOCODE_API_KEY`. Offline:
 
 ```bash
 screenlane send --target clipboard --text "..."

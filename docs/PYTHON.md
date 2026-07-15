@@ -18,7 +18,7 @@ cd python && pip install -e ".[dev]"
 
 ## Auth
 
-Uses **TALOCODE_API_KEY** only when the server enables `SCREENLANE_REQUIRE_AUTH=true`.
+Uses `TALOCODE_API_KEY` when the server enables `SCREENLANE_REQUIRE_AUTH=true`.
 
 ## Build / publish
 

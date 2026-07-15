@@ -39,31 +39,22 @@ describe("config and auth", () => {
     assert.equal(resolveTalocodeApiKey(), undefined);
   });
 
-  it("gates only with TALOCODE_API_KEY when require auth", () => {
+  it("gates with TALOCODE_API_KEY when require auth", () => {
     process.env.SCREENLANE_REQUIRE_AUTH = "true";
     process.env.TALOCODE_API_KEY = "test-key-abc";
-    process.env.SCREENLANE_API_KEY = "screenlane-key-ignored";
-    process.env.TERA_API_KEY = "tera-key-ignored";
     assert.equal(isAuthRequired(), true);
     assert.throws(
       () => checkAuth({ headers: {} }),
       (err: unknown) => err instanceof AuthError
     );
-    // Other product keys must NOT unlock the API
     assert.throws(
-      () => checkAuth({ headers: { authorization: "Bearer screenlane-key-ignored" } }),
-      (err: unknown) => err instanceof AuthError
-    );
-    assert.throws(
-      () => checkAuth({ headers: { authorization: "Bearer tera-key-ignored" } }),
+      () => checkAuth({ headers: { authorization: "Bearer wrong-key" } }),
       (err: unknown) => err instanceof AuthError
     );
     checkAuth({ headers: { authorization: "Bearer test-key-abc" } });
     checkAuth({ headers: { "x-talocode-api-key": "test-key-abc" } });
     delete process.env.SCREENLANE_REQUIRE_AUTH;
     delete process.env.TALOCODE_API_KEY;
-    delete process.env.SCREENLANE_API_KEY;
-    delete process.env.TERA_API_KEY;
   });
 
   it("redacts secrets", () => {

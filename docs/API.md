@@ -22,10 +22,10 @@ or:
 X-Talocode-Api-Key: <TALOCODE_API_KEY>
 ```
 
-**Only `TALOCODE_API_KEY` is accepted** for access control.  
-`SCREENLANE_API_KEY`, `TERA_API_KEY`, `CODRA_API_KEY`, `GATELANE_API_KEY`, and `OPENAI_API_KEY` are **not** access credentials.
+Health endpoints stay public:
 
-`GET /health` and `GET /v1/screenlane/health` remain public so load balancers can probe.
+- `GET /health`
+- `GET /v1/screenlane/health`
 
 ## Routes
 
@@ -35,7 +35,7 @@ X-Talocode-Api-Key: <TALOCODE_API_KEY>
 - `GET /v1/screenlane/health`
 
 ```json
-{ "ok": true, "service": "screenlane", "version": "0.1.0" }
+{ "ok": true, "service": "screenlane", "version": "0.1.2" }
 ```
 
 ### Doctor

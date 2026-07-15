@@ -40,7 +40,7 @@ screenlane-py command --text "Fix this error" --context-text "..." --offline
 screenlane-py demo
 ```
 
-Auth uses **only** `TALOCODE_API_KEY` (Bearer header).
+Auth uses `TALOCODE_API_KEY` (Bearer header).
 
 ## License
 

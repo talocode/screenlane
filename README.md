@@ -117,7 +117,7 @@ const cmd = await client.createCommand({
 // HTTP mode
 const remote = new ScreenLaneClient({
   baseUrl: "http://127.0.0.1:3070",
-  apiKey: process.env.TALOCODE_API_KEY, // only when auth required
+  apiKey: process.env.TALOCODE_API_KEY,
 });
 ```
 
@@ -144,8 +144,6 @@ Default: `http://127.0.0.1:3070`
 ```http
 Authorization: Bearer <TALOCODE_API_KEY>
 ```
-
-Access is gated with **only** `TALOCODE_API_KEY` (no separate `SCREENLANE_API_KEY`).
 
 See [docs/API.md](docs/API.md).
 
@@ -181,19 +179,16 @@ See [docs/PYTHON.md](docs/PYTHON.md) and [python/README.md](python/README.md).
 
 | Variable | Purpose |
 |----------|---------|
-| `TALOCODE_API_KEY` | **Only** key for API access + Tera/Codra/GateLane cloud calls |
+| `TALOCODE_API_KEY` | API access (when auth required) and cloud targets |
 | `SCREENLANE_REQUIRE_AUTH` | `true` → require `Authorization: Bearer <TALOCODE_API_KEY>` |
 | `SCREENLANE_API_BASE_URL` | Optional base for integrations |
 | `SCREENLANE_HOME` | Override `~/.screenlane` |
 | `SCREENLANE_PORT` | API port (default 3070) |
-| `TERA_API_BASE_URL` | Tera endpoint (auth: `TALOCODE_API_KEY` only) |
-| `CODRA_API_BASE_URL` | Codra endpoint (auth: `TALOCODE_API_KEY` only) |
-| `GATELANE_API_BASE_URL` | GateLane endpoint (auth: `TALOCODE_API_KEY` only) |
-| `OPENAI_API_KEY` | Optional third-party audio only — **not** ScreenLane access |
+| `TERA_API_BASE_URL` | Tera endpoint |
+| `CODRA_API_BASE_URL` | Codra endpoint |
+| `GATELANE_API_BASE_URL` | GateLane endpoint |
 
-**Not used:** `SCREENLANE_API_KEY`, `TERA_API_KEY`, `CODRA_API_KEY`, `GATELANE_API_KEY` (deleted as access/cloud credentials).
-
-Secrets are never required for local capture/command/demo.
+Local capture/command/demo do not require `TALOCODE_API_KEY`.
 
 ## Security & privacy
 
@@ -272,7 +267,7 @@ See [docs/ROADMAP.md](docs/ROADMAP.md).
 - Live microphone capture is not shipped; prefer `--text` or audio files + keys  
 - Screenshot capture depends on OS tools/permissions  
 - Command generation is **deterministic templates** (no cloud LLM required)  
-- Tera / Codra / GateLane integrations only work with real base URLs + keys — not faked  
+- Tera / Codra / GateLane integrations need real base URLs and `TALOCODE_API_KEY` — not faked  
 - OCR on screenshots is not included  
 
 ## Contributing

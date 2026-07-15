@@ -2,25 +2,23 @@
 
 ## Local-first
 
-- Default storage: `~/.screenlane/` (contexts, commands, config)  
-- Core capture/command/demo work **without** network or API keys  
+- Default storage: `~/.screenlane/` (contexts, commands, config)
+- Core capture/command/demo work **without** network or `TALOCODE_API_KEY`
 
 ## API keys
 
-- **Access control and Talocode cloud use only `TALOCODE_API_KEY`**  
-- Removed / not accepted: `SCREENLANE_API_KEY`, `TERA_API_KEY`, `CODRA_API_KEY`, `GATELANE_API_KEY`  
-- Optional: `screenlane auth set --key ...` writes `~/.screenlane/auth.json` with mode `0600`  
-- Never commit `.env` or auth files  
-- CLI `auth status` prints **masked** keys only  
-- Outputs run through `redactSecrets` for common key patterns  
-- `OPENAI_API_KEY` is optional third-party STT only — never grants ScreenLane API access  
+- Use `TALOCODE_API_KEY` for API auth and cloud targets
+- Optional: `screenlane auth set --key ...` writes `~/.screenlane/auth.json` with mode `0600`
+- Never commit `.env` or auth files
+- CLI `auth status` prints **masked** keys only
+- Outputs run through secret redaction for common patterns
 
 ## Auth model
 
 | Mode | Behavior |
 |------|----------|
 | Default | Local API open on localhost |
-| `SCREENLANE_REQUIRE_AUTH=true` | Require Bearer / `X-Talocode-Api-Key` matching **only** `TALOCODE_API_KEY` |
+| `SCREENLANE_REQUIRE_AUTH=true` | Require Bearer / `X-Talocode-Api-Key` matching `TALOCODE_API_KEY` |
 
 Health endpoints stay public.
 

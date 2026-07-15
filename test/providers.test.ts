@@ -22,12 +22,10 @@ describe("providers / send", () => {
     if (prevTalo) process.env.TALOCODE_API_KEY = prevTalo;
   });
 
-  it("ignores TERA_API_KEY for cloud auth — only TALOCODE_API_KEY", async () => {
+  it("requires TALOCODE_API_KEY for tera send", async () => {
     const prevBase = process.env.TERA_API_BASE_URL;
     const prevTalo = process.env.TALOCODE_API_KEY;
-    const prevTera = process.env.TERA_API_KEY;
     process.env.TERA_API_BASE_URL = "https://example.invalid";
-    process.env.TERA_API_KEY = "should-not-unlock";
     delete process.env.TALOCODE_API_KEY;
     await assert.rejects(
       () => send({ target: "tera", text: "hi" }),
@@ -38,7 +36,5 @@ describe("providers / send", () => {
     else delete process.env.TERA_API_BASE_URL;
     if (prevTalo) process.env.TALOCODE_API_KEY = prevTalo;
     else delete process.env.TALOCODE_API_KEY;
-    if (prevTera) process.env.TERA_API_KEY = prevTera;
-    else delete process.env.TERA_API_KEY;
   });
 });

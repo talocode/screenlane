@@ -52,7 +52,7 @@ export TALOCODE_API_KEY=your_key
 # Authorization: Bearer <TALOCODE_API_KEY>
 \`\`\`
 
-Only \`TALOCODE_API_KEY\` is used for access control (no separate SCREENLANE_API_KEY).
+Access control uses \`TALOCODE_API_KEY\`.
 
 ## Limitations (honest)
 

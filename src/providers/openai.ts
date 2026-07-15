@@ -7,7 +7,7 @@ export function openaiConfigured(): boolean {
 export function requireOpenAI(): string {
   const key = process.env.OPENAI_API_KEY;
   if (!key) {
-    throw new ProviderError("OPENAI_API_KEY is not set");
+    throw new ProviderError("Audio transcription provider is not configured. Use --text instead.");
   }
   return key;
 }

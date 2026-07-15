@@ -7,7 +7,6 @@ export function gatelaneBaseUrl(): string | undefined {
   return base ? base.replace(/\/$/, "") : undefined;
 }
 
-/** Cloud calls use only TALOCODE_API_KEY (no product-specific keys). */
 export function gatelaneApiKey(): string | undefined {
   return resolveTalocodeApiKey();
 }

@@ -143,17 +143,15 @@ export function clearTalocodeApiKey(): void {
 }
 
 export function getEnvSummary(): Record<string, string> {
+  // Access + Talocode cloud: only TALOCODE_API_KEY. Product keys are not used.
   const keys = [
     "TALOCODE_API_KEY",
-    "TERA_API_KEY",
-    "CODRA_API_KEY",
-    "GATELANE_API_KEY",
-    "OPENAI_API_KEY",
     "SCREENLANE_REQUIRE_AUTH",
     "SCREENLANE_API_BASE_URL",
     "TERA_API_BASE_URL",
     "CODRA_API_BASE_URL",
     "GATELANE_API_BASE_URL",
+    "OPENAI_API_KEY",
     "OPENAI_API_BASE_URL",
   ];
   const out: Record<string, string> = {};
@@ -168,6 +166,8 @@ export function getEnvSummary(): Record<string, string> {
   if (loadStoredTalocodeKey() && !process.env.TALOCODE_API_KEY) {
     out.TALOCODE_API_KEY = "set (auth store)";
   }
+  // Explicitly note removed multi-key access
+  out.access_control = "TALOCODE_API_KEY only";
   return out;
 }
 

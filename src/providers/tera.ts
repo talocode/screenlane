@@ -7,8 +7,9 @@ export function teraBaseUrl(): string | undefined {
   return base ? base.replace(/\/$/, "") : undefined;
 }
 
+/** Cloud calls use only TALOCODE_API_KEY (no product-specific keys). */
 export function teraApiKey(): string | undefined {
-  return process.env.TERA_API_KEY || process.env.TALOCODE_API_KEY || resolveTalocodeApiKey();
+  return resolveTalocodeApiKey();
 }
 
 export async function sendToTera(prompt: string, command?: AgentCommand): Promise<unknown> {
@@ -16,7 +17,7 @@ export async function sendToTera(prompt: string, command?: AgentCommand): Promis
   const key = teraApiKey();
   if (!base || !key) {
     throw new ProviderError(
-      "Tera integration requires TERA_API_BASE_URL and TERA_API_KEY or TALOCODE_API_KEY. Clipboard/stdout targets work offline."
+      "Tera integration requires TERA_API_BASE_URL and TALOCODE_API_KEY. Clipboard/stdout targets work offline."
     );
   }
 

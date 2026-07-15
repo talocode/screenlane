@@ -7,8 +7,9 @@ export function codraBaseUrl(): string | undefined {
   return base ? base.replace(/\/$/, "") : undefined;
 }
 
+/** Cloud calls use only TALOCODE_API_KEY (no product-specific keys). */
 export function codraApiKey(): string | undefined {
-  return process.env.CODRA_API_KEY || process.env.TALOCODE_API_KEY || resolveTalocodeApiKey();
+  return resolveTalocodeApiKey();
 }
 
 export async function sendToCodra(prompt: string, command?: AgentCommand): Promise<unknown> {
@@ -16,7 +17,7 @@ export async function sendToCodra(prompt: string, command?: AgentCommand): Promi
   const key = codraApiKey();
   if (!base || !key) {
     throw new ProviderError(
-      "Codra integration requires CODRA_API_BASE_URL and CODRA_API_KEY or TALOCODE_API_KEY. Use --target clipboard|stdout offline."
+      "Codra integration requires CODRA_API_BASE_URL and TALOCODE_API_KEY. Use --target clipboard|stdout offline."
     );
   }
 

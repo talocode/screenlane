@@ -22,7 +22,8 @@ or:
 X-Talocode-Api-Key: <TALOCODE_API_KEY>
 ```
 
-**Only `TALOCODE_API_KEY` is accepted** for access control. There is no `SCREENLANE_API_KEY`.
+**Only `TALOCODE_API_KEY` is accepted** for access control.  
+`SCREENLANE_API_KEY`, `TERA_API_KEY`, `CODRA_API_KEY`, `GATELANE_API_KEY`, and `OPENAI_API_KEY` are **not** access credentials.
 
 `GET /health` and `GET /v1/screenlane/health` remain public so load balancers can probe.
 

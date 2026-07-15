@@ -7,8 +7,9 @@ export function gatelaneBaseUrl(): string | undefined {
   return base ? base.replace(/\/$/, "") : undefined;
 }
 
+/** Cloud calls use only TALOCODE_API_KEY (no product-specific keys). */
 export function gatelaneApiKey(): string | undefined {
-  return process.env.GATELANE_API_KEY || process.env.TALOCODE_API_KEY || resolveTalocodeApiKey();
+  return resolveTalocodeApiKey();
 }
 
 export async function sendToGateLane(prompt: string, command?: AgentCommand): Promise<unknown> {
@@ -16,7 +17,7 @@ export async function sendToGateLane(prompt: string, command?: AgentCommand): Pr
   const key = gatelaneApiKey();
   if (!base || !key) {
     throw new ProviderError(
-      "GateLane integration requires GATELANE_API_BASE_URL and GATELANE_API_KEY or TALOCODE_API_KEY."
+      "GateLane integration requires GATELANE_API_BASE_URL and TALOCODE_API_KEY."
     );
   }
 

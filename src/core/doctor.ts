@@ -85,8 +85,8 @@ export async function doctor(): Promise<DoctorReport> {
     status: teraBaseUrl() && teraApiKey() ? "ok" : "info",
     detail:
       teraBaseUrl() && teraApiKey()
-        ? `configured base=${teraBaseUrl()}`
-        : "not fully configured (needs TERA_API_BASE_URL + key)",
+        ? `configured base=${teraBaseUrl()} (auth: TALOCODE_API_KEY only)`
+        : "not fully configured (needs TERA_API_BASE_URL + TALOCODE_API_KEY)",
   });
 
   checks.push({
@@ -94,8 +94,8 @@ export async function doctor(): Promise<DoctorReport> {
     status: codraBaseUrl() && codraApiKey() ? "ok" : "info",
     detail:
       codraBaseUrl() && codraApiKey()
-        ? `configured base=${codraBaseUrl()}`
-        : "not fully configured (needs CODRA_API_BASE_URL + key)",
+        ? `configured base=${codraBaseUrl()} (auth: TALOCODE_API_KEY only)`
+        : "not fully configured (needs CODRA_API_BASE_URL + TALOCODE_API_KEY)",
   });
 
   checks.push({
@@ -103,8 +103,8 @@ export async function doctor(): Promise<DoctorReport> {
     status: gatelaneBaseUrl() && gatelaneApiKey() ? "ok" : "info",
     detail:
       gatelaneBaseUrl() && gatelaneApiKey()
-        ? `configured base=${gatelaneBaseUrl()}`
-        : "not fully configured",
+        ? `configured base=${gatelaneBaseUrl()} (auth: TALOCODE_API_KEY only)`
+        : "not fully configured (needs GATELANE_API_BASE_URL + TALOCODE_API_KEY)",
   });
 
   checks.push({

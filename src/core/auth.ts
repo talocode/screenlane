@@ -10,7 +10,8 @@ import { loadConfig, resolveTalocodeApiKey } from "./config.js";
  * or
  *   X-Talocode-Api-Key: <TALOCODE_API_KEY>
  *
- * There is no separate SCREENLANE_API_KEY.
+ * Not accepted for access (ignored / will not unlock the API):
+ * SCREENLANE_API_KEY, TERA_API_KEY, CODRA_API_KEY, GATELANE_API_KEY, OPENAI_API_KEY.
  */
 export function isAuthRequired(): boolean {
   if (process.env.SCREENLANE_REQUIRE_AUTH === "true") return true;

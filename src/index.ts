@@ -1,6 +1,6 @@
 /** @talocode/screenlane — public SDK exports */
 
-export const VERSION = "0.1.1";
+export const VERSION = "0.1.2";
 
 export type {
   ScreenContext,

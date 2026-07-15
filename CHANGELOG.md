@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.2] — 2026-07-15
+
+### Changed
+
+- Access and Talocode cloud integrations use **only `TALOCODE_API_KEY`**
+- Removed acceptance of `SCREENLANE_API_KEY`, `TERA_API_KEY`, `CODRA_API_KEY`, `GATELANE_API_KEY` as credentials
+
 ## [0.1.1] — 2026-07-15
 
 ### Fixed

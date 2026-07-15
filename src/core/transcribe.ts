@@ -50,11 +50,11 @@ async function transcribeOpenAI(audioPath: string, language?: string): Promise<s
 }
 
 async function transcribeTera(audioPath: string): Promise<string> {
-  const key = process.env.TERA_API_KEY || process.env.TALOCODE_API_KEY || resolveTalocodeApiKey();
+  const key = resolveTalocodeApiKey();
   const base = (process.env.TERA_API_BASE_URL || "").replace(/\/$/, "");
   if (!key || !base) {
     throw new ProviderError(
-      "Tera transcription requires TERA_API_KEY or TALOCODE_API_KEY and TERA_API_BASE_URL. Use --text fallback if unavailable."
+      "Tera transcription requires TALOCODE_API_KEY and TERA_API_BASE_URL. Use --text fallback if unavailable."
     );
   }
   const buf = readFileSync(audioPath);
@@ -105,14 +105,12 @@ export async function dictate(input: DictateInput = {}): Promise<VoiceInput> {
   const file = assertAudioFile(audioPath);
 
   if (provider === "local") {
-    // Auto-select cloud provider if keys present; else error with guidance
+    // Auto-select: OpenAI only if OPENAI_API_KEY set; else Tera with TALOCODE_API_KEY only
     if (process.env.OPENAI_API_KEY) provider = "openai";
-    else if (process.env.TERA_API_KEY || process.env.TALOCODE_API_KEY || resolveTalocodeApiKey()) {
-      if (process.env.TERA_API_BASE_URL) provider = "tera";
-    }
+    else if (resolveTalocodeApiKey() && process.env.TERA_API_BASE_URL) provider = "tera";
     if (provider === "local") {
       throw new ProviderError(
-        "Local mic/STT is not bundled in v0.1. Use --text \"...\" for deterministic input, or set OPENAI_API_KEY (or TERA_API_KEY + TERA_API_BASE_URL) with --audio."
+        "Local mic/STT is not bundled in v0.1. Use --text \"...\" for deterministic input, or set OPENAI_API_KEY / (TALOCODE_API_KEY + TERA_API_BASE_URL) with --audio."
       );
     }
   }

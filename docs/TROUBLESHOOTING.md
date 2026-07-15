@@ -22,7 +22,7 @@ screenlane dictate --audio ./clip.wav --provider openai
 
 ## Tera/Codra send errors
 
-Need live `*_API_BASE_URL` and key (`TALOCODE_API_KEY` or product key). Offline:
+Need live `*_API_BASE_URL` and **`TALOCODE_API_KEY` only** (product keys are not used). Offline:
 
 ```bash
 screenlane send --target clipboard --text "..."

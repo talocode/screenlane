@@ -181,15 +181,17 @@ See [docs/PYTHON.md](docs/PYTHON.md) and [python/README.md](python/README.md).
 
 | Variable | Purpose |
 |----------|---------|
-| `TALOCODE_API_KEY` | **Auth key** when `SCREENLANE_REQUIRE_AUTH=true`; also used for Talocode cloud targets |
-| `SCREENLANE_REQUIRE_AUTH` | `true` to require Bearer `TALOCODE_API_KEY` on API |
+| `TALOCODE_API_KEY` | **Only** key for API access + Tera/Codra/GateLane cloud calls |
+| `SCREENLANE_REQUIRE_AUTH` | `true` → require `Authorization: Bearer <TALOCODE_API_KEY>` |
 | `SCREENLANE_API_BASE_URL` | Optional base for integrations |
 | `SCREENLANE_HOME` | Override `~/.screenlane` |
 | `SCREENLANE_PORT` | API port (default 3070) |
-| `TERA_API_KEY` / `TERA_API_BASE_URL` | Tera send/transcribe |
-| `CODRA_API_KEY` / `CODRA_API_BASE_URL` | Codra send |
-| `GATELANE_API_KEY` / `GATELANE_API_BASE_URL` | GateLane send |
-| `OPENAI_API_KEY` | Audio transcription (`--audio`) |
+| `TERA_API_BASE_URL` | Tera endpoint (auth: `TALOCODE_API_KEY` only) |
+| `CODRA_API_BASE_URL` | Codra endpoint (auth: `TALOCODE_API_KEY` only) |
+| `GATELANE_API_BASE_URL` | GateLane endpoint (auth: `TALOCODE_API_KEY` only) |
+| `OPENAI_API_KEY` | Optional third-party audio only — **not** ScreenLane access |
+
+**Not used:** `SCREENLANE_API_KEY`, `TERA_API_KEY`, `CODRA_API_KEY`, `GATELANE_API_KEY` (deleted as access/cloud credentials).
 
 Secrets are never required for local capture/command/demo.
 

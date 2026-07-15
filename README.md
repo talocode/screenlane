@@ -181,14 +181,12 @@ See [docs/PYTHON.md](docs/PYTHON.md) and [python/README.md](python/README.md).
 |----------|---------|
 | `TALOCODE_API_KEY` | API access (when auth required) and cloud targets |
 | `SCREENLANE_REQUIRE_AUTH` | `true` → require `Authorization: Bearer <TALOCODE_API_KEY>` |
-| `SCREENLANE_API_BASE_URL` | Optional base for integrations |
+| Cloud API base | **`https://api.talocode.site`** (default) |
+| `SCREENLANE_API_BASE_URL` / `TALOCODE_API_BASE_URL` / `TALOCODE_BASE_URL` | Optional override of cloud base |
 | `SCREENLANE_HOME` | Override `~/.screenlane` |
-| `SCREENLANE_PORT` | API port (default 3070) |
-| `TERA_API_BASE_URL` | Tera endpoint |
-| `CODRA_API_BASE_URL` | Codra endpoint |
-| `GATELANE_API_BASE_URL` | GateLane endpoint |
+| `SCREENLANE_PORT` | Local API port (default 3070) |
 
-Local capture/command/demo do not require `TALOCODE_API_KEY`.
+Local capture/command/demo do not require `TALOCODE_API_KEY`. Cloud send uses `https://api.talocode.site` by default.
 
 ## Security & privacy
 

@@ -1,10 +1,9 @@
 import type { AgentCommand } from "../core/types.js";
 import { ProviderError } from "../core/errors.js";
-import { resolveTalocodeApiKey } from "../core/config.js";
+import { resolveCloudApiBase, resolveTalocodeApiKey } from "../core/config.js";
 
-export function codraBaseUrl(): string | undefined {
-  const base = process.env.CODRA_API_BASE_URL;
-  return base ? base.replace(/\/$/, "") : undefined;
+export function codraBaseUrl(): string {
+  return resolveCloudApiBase(process.env.CODRA_API_BASE_URL);
 }
 
 export function codraApiKey(): string | undefined {
@@ -14,9 +13,9 @@ export function codraApiKey(): string | undefined {
 export async function sendToCodra(prompt: string, command?: AgentCommand): Promise<unknown> {
   const base = codraBaseUrl();
   const key = codraApiKey();
-  if (!base || !key) {
+  if (!key) {
     throw new ProviderError(
-      "Codra integration requires CODRA_API_BASE_URL and TALOCODE_API_KEY. Use --target clipboard|stdout offline."
+      "Codra integration requires TALOCODE_API_KEY. Use --target clipboard|stdout offline."
     );
   }
 

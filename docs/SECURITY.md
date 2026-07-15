@@ -22,6 +22,10 @@
 
 Health endpoints stay public.
 
+## Cloud API
+
+Default Talocode Cloud base: **`https://api.talocode.site`**.
+
 ## Clipboard / screen
 
 OS clipboard and screenshot tools may access sensitive UI. Review prompts before sending to external agents.

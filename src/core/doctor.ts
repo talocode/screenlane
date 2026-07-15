@@ -1,5 +1,13 @@
 import { existsSync } from "node:fs";
-import { getConfigPath, getHomeDir, getEnvSummary, loadConfig, resolveTalocodeApiKey } from "./config.js";
+import {
+  getConfigPath,
+  getHomeDir,
+  getEnvSummary,
+  loadConfig,
+  resolveCloudApiBase,
+  resolveTalocodeApiKey,
+  TALOCODE_CLOUD_API_BASE,
+} from "./config.js";
 import { listClipboardTools, listScreenshotTools } from "./capture.js";
 import { maskKey } from "./errors.js";
 import type { DoctorCheck, DoctorReport } from "./types.js";
@@ -74,30 +82,33 @@ export async function doctor(): Promise<DoctorReport> {
   });
 
   checks.push({
+    name: "cloud_api",
+    status: "info",
+    detail: `base=${resolveCloudApiBase()} (default ${TALOCODE_CLOUD_API_BASE})`,
+  });
+
+  checks.push({
     name: "tera",
-    status: teraBaseUrl() && teraApiKey() ? "ok" : "info",
-    detail:
-      teraBaseUrl() && teraApiKey()
-        ? `configured base=${teraBaseUrl()}`
-        : "not fully configured (TERA_API_BASE_URL + TALOCODE_API_KEY)",
+    status: teraApiKey() ? "ok" : "info",
+    detail: teraApiKey()
+      ? `ready base=${teraBaseUrl()}`
+      : `base=${teraBaseUrl()} — set TALOCODE_API_KEY to enable`,
   });
 
   checks.push({
     name: "codra",
-    status: codraBaseUrl() && codraApiKey() ? "ok" : "info",
-    detail:
-      codraBaseUrl() && codraApiKey()
-        ? `configured base=${codraBaseUrl()}`
-        : "not fully configured (CODRA_API_BASE_URL + TALOCODE_API_KEY)",
+    status: codraApiKey() ? "ok" : "info",
+    detail: codraApiKey()
+      ? `ready base=${codraBaseUrl()}`
+      : `base=${codraBaseUrl()} — set TALOCODE_API_KEY to enable`,
   });
 
   checks.push({
     name: "gatelane",
-    status: gatelaneBaseUrl() && gatelaneApiKey() ? "ok" : "info",
-    detail:
-      gatelaneBaseUrl() && gatelaneApiKey()
-        ? `configured base=${gatelaneBaseUrl()}`
-        : "not fully configured (GATELANE_API_BASE_URL + TALOCODE_API_KEY)",
+    status: gatelaneApiKey() ? "ok" : "info",
+    detail: gatelaneApiKey()
+      ? `ready base=${gatelaneBaseUrl()}`
+      : `base=${gatelaneBaseUrl()} — set TALOCODE_API_KEY to enable`,
   });
 
   checks.push({

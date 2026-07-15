@@ -40,6 +40,8 @@ export {
   saveConfig,
   getHomeDir,
   resolveTalocodeApiKey,
+  resolveCloudApiBase,
+  TALOCODE_CLOUD_API_BASE,
   setTalocodeApiKey,
   clearTalocodeApiKey,
   getEnvSummary,

@@ -18,11 +18,18 @@ class ScreenLaneClient:
 
     def __init__(
         self,
-        base_url: str = "http://127.0.0.1:3070",
+        base_url: Optional[str] = None,
         api_key: Optional[str] = None,
         timeout: float = 30.0,
     ) -> None:
-        self.base_url = base_url.rstrip("/")
+        # Local ScreenLane server by default; cloud is https://api.talocode.site
+        self.base_url = (
+            base_url
+            or os.environ.get("SCREENLANE_API_BASE_URL")
+            or os.environ.get("TALOCODE_API_BASE_URL")
+            or os.environ.get("TALOCODE_BASE_URL")
+            or "http://127.0.0.1:3070"
+        ).rstrip("/")
         self.api_key = api_key or os.environ.get("TALOCODE_API_KEY")
         self.timeout = timeout
 

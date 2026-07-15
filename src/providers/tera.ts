@@ -1,10 +1,9 @@
 import type { AgentCommand } from "../core/types.js";
 import { ProviderError } from "../core/errors.js";
-import { resolveTalocodeApiKey } from "../core/config.js";
+import { resolveCloudApiBase, resolveTalocodeApiKey } from "../core/config.js";
 
-export function teraBaseUrl(): string | undefined {
-  const base = process.env.TERA_API_BASE_URL || process.env.SCREENLANE_API_BASE_URL;
-  return base ? base.replace(/\/$/, "") : undefined;
+export function teraBaseUrl(): string {
+  return resolveCloudApiBase(process.env.TERA_API_BASE_URL);
 }
 
 export function teraApiKey(): string | undefined {
@@ -14,13 +13,17 @@ export function teraApiKey(): string | undefined {
 export async function sendToTera(prompt: string, command?: AgentCommand): Promise<unknown> {
   const base = teraBaseUrl();
   const key = teraApiKey();
-  if (!base || !key) {
+  if (!key) {
     throw new ProviderError(
-      "Tera integration requires TERA_API_BASE_URL and TALOCODE_API_KEY. Clipboard/stdout targets work offline."
+      "Tera integration requires TALOCODE_API_KEY. Clipboard/stdout targets work offline."
     );
   }
 
-  const endpoints = [`${base}/v1/chat/completions`, `${base}/v1/tera/chat`, `${base}/chat`];
+  const endpoints = [
+    `${base}/v1/tera/chat`,
+    `${base}/v1/chat/completions`,
+    `${base}/chat`,
+  ];
   let lastErr = "";
   for (const url of endpoints) {
     try {

@@ -1,10 +1,9 @@
 import type { AgentCommand } from "../core/types.js";
 import { ProviderError } from "../core/errors.js";
-import { resolveTalocodeApiKey } from "../core/config.js";
+import { resolveCloudApiBase, resolveTalocodeApiKey } from "../core/config.js";
 
-export function gatelaneBaseUrl(): string | undefined {
-  const base = process.env.GATELANE_API_BASE_URL;
-  return base ? base.replace(/\/$/, "") : undefined;
+export function gatelaneBaseUrl(): string {
+  return resolveCloudApiBase(process.env.GATELANE_API_BASE_URL);
 }
 
 export function gatelaneApiKey(): string | undefined {
@@ -14,10 +13,8 @@ export function gatelaneApiKey(): string | undefined {
 export async function sendToGateLane(prompt: string, command?: AgentCommand): Promise<unknown> {
   const base = gatelaneBaseUrl();
   const key = gatelaneApiKey();
-  if (!base || !key) {
-    throw new ProviderError(
-      "GateLane integration requires GATELANE_API_BASE_URL and TALOCODE_API_KEY."
-    );
+  if (!key) {
+    throw new ProviderError("GateLane integration requires TALOCODE_API_KEY.");
   }
 
   const url = `${base}/v1/gatelane/call`;

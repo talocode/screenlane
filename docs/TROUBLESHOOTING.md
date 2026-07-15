@@ -19,7 +19,7 @@ screenlane dictate --text "your words"
 
 ## Cloud send errors
 
-Need the service base URL and `TALOCODE_API_KEY`. Offline:
+Cloud defaults to `https://api.talocode.site`. Set `TALOCODE_API_KEY`. Offline:
 
 ```bash
 screenlane send --target clipboard --text "..."

@@ -7,6 +7,23 @@ import { nowIso } from "./ids.js";
 
 const CONFIG_VERSION = 1;
 
+/** Default Talocode Cloud API (override with SCREENLANE_API_BASE_URL / TALOCODE_API_BASE_URL / TALOCODE_BASE_URL). */
+export const TALOCODE_CLOUD_API_BASE = "https://api.talocode.site";
+
+/**
+ * Resolve cloud API base URL.
+ * Product-specific env vars win, then shared overrides, then api.talocode.site.
+ */
+export function resolveCloudApiBase(productEnv?: string | undefined): string {
+  const base =
+    (productEnv && productEnv.trim()) ||
+    process.env.SCREENLANE_API_BASE_URL ||
+    process.env.TALOCODE_API_BASE_URL ||
+    process.env.TALOCODE_BASE_URL ||
+    TALOCODE_CLOUD_API_BASE;
+  return base.replace(/\/$/, "");
+}
+
 export function getHomeDir(): string {
   return process.env.SCREENLANE_HOME || join(homedir(), ".screenlane");
 }
@@ -147,6 +164,8 @@ export function getEnvSummary(): Record<string, string> {
     "TALOCODE_API_KEY",
     "SCREENLANE_REQUIRE_AUTH",
     "SCREENLANE_API_BASE_URL",
+    "TALOCODE_API_BASE_URL",
+    "TALOCODE_BASE_URL",
     "TERA_API_BASE_URL",
     "CODRA_API_BASE_URL",
     "GATELANE_API_BASE_URL",
@@ -163,6 +182,7 @@ export function getEnvSummary(): Record<string, string> {
   if (loadStoredTalocodeKey() && !process.env.TALOCODE_API_KEY) {
     out.TALOCODE_API_KEY = "set (auth store)";
   }
+  out.cloud_api_base = resolveCloudApiBase();
   return out;
 }
 

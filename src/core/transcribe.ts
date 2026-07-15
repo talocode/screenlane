@@ -4,7 +4,7 @@ import { ProviderError, ScreenLaneError } from "./errors.js";
 import { newId, nowIso } from "./ids.js";
 import { assertAudioFile, estimateDurationMs } from "./audio.js";
 import { saveVoice } from "./storage.js";
-import { resolveTalocodeApiKey } from "./config.js";
+import { resolveCloudApiBase, resolveTalocodeApiKey } from "./config.js";
 
 export function createVoiceInput(
   partial: Partial<VoiceInput> & { transcript: string; source: VoiceInput["source"] }
@@ -51,10 +51,10 @@ async function transcribeOpenAI(audioPath: string, language?: string): Promise<s
 
 async function transcribeTera(audioPath: string): Promise<string> {
   const key = resolveTalocodeApiKey();
-  const base = (process.env.TERA_API_BASE_URL || "").replace(/\/$/, "");
-  if (!key || !base) {
+  const base = resolveCloudApiBase(process.env.TERA_API_BASE_URL);
+  if (!key) {
     throw new ProviderError(
-      "Tera transcription requires TALOCODE_API_KEY and TERA_API_BASE_URL. Use --text if unavailable."
+      "Tera transcription requires TALOCODE_API_KEY. Use --text if unavailable."
     );
   }
   const buf = readFileSync(audioPath);
@@ -106,7 +106,7 @@ export async function dictate(input: DictateInput = {}): Promise<VoiceInput> {
 
   if (provider === "local") {
     if (process.env.OPENAI_API_KEY) provider = "openai";
-    else if (resolveTalocodeApiKey() && process.env.TERA_API_BASE_URL) provider = "tera";
+    else if (resolveTalocodeApiKey()) provider = "tera";
     if (provider === "local") {
       throw new ProviderError(
         'Local mic/STT is not bundled in v0.1. Use --text "..." for deterministic input, or --audio with a configured transcription provider.'

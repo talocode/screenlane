@@ -8,6 +8,8 @@ import {
   setTalocodeApiKey,
   clearTalocodeApiKey,
   resolveTalocodeApiKey,
+  resolveCloudApiBase,
+  TALOCODE_CLOUD_API_BASE,
   maskKey,
   redactSecrets,
   AuthError,
@@ -61,5 +63,26 @@ describe("config and auth", () => {
     const s = redactSecrets("Bearer sk-abcdefghijklmnop and TALOCODE_API_KEY=supersecret");
     assert.ok(!s.includes("supersecret"));
     assert.ok(!s.includes("sk-abcdefghijklmnop"));
+  });
+
+  it("defaults cloud API base to api.talocode.site", () => {
+    const prev = {
+      SCREENLANE_API_BASE_URL: process.env.SCREENLANE_API_BASE_URL,
+      TALOCODE_API_BASE_URL: process.env.TALOCODE_API_BASE_URL,
+      TALOCODE_BASE_URL: process.env.TALOCODE_BASE_URL,
+      TERA_API_BASE_URL: process.env.TERA_API_BASE_URL,
+    };
+    delete process.env.SCREENLANE_API_BASE_URL;
+    delete process.env.TALOCODE_API_BASE_URL;
+    delete process.env.TALOCODE_BASE_URL;
+    delete process.env.TERA_API_BASE_URL;
+    assert.equal(TALOCODE_CLOUD_API_BASE, "https://api.talocode.site");
+    assert.equal(resolveCloudApiBase(), "https://api.talocode.site");
+    process.env.SCREENLANE_API_BASE_URL = "https://custom.example";
+    assert.equal(resolveCloudApiBase(), "https://custom.example");
+    for (const [k, v] of Object.entries(prev)) {
+      if (v === undefined) delete process.env[k];
+      else process.env[k] = v;
+    }
   });
 });
